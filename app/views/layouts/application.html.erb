@@ -14,11 +14,16 @@
       <div class="col">
         <%= flash[:notice] %>
       </div>
-      <div class="col-2 text-end">
+      <div class="col-10 text-end">
         <!-- TODO: if logged in user, show user's first name and Logout button -->
+        <%if @current_user%>
+          Welcome, <%=@current_user.first_name%>!
+          <%= button_to "Logout", "/sessions/logout", method: :delete %>
+        <%else%>
         <!-- TODO: if logged in user, hide Login and Sign Up -->
         <a href="/sessions/new" class="btn btn-default">Login</a> |
         <a href="/users/new" class="btn btn-default">Sign Up</a>
+        <%end%>
       </div>
     </div>
 
@@ -26,9 +31,15 @@
       <div class="col">
         <h1 class="display-6 mb-4">Tacostagram</h1>
       </div>
+      <% if @current_user%>
       <div class="col-2 text-end">
         <a href="/posts/new/" class="btn btn-success">New Post</a>
       </div>
+      <% else %>
+      <div class="col-9 text-end">
+      You must <a href="/sessions/new">log in </a> to post
+      </div>
+      <% end %>
     </div>
 
     <%= yield %>
